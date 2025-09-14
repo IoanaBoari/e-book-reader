@@ -1,10 +1,10 @@
-### OpenBook - Proiect
+### OpenBook - Project
 
-## Diagrama Bloc
-![Diagrama Bloc](Images/diagram.drawio.png)
+## Block Diagram
+![Block Diagram](Images/diagram.drawio.png)
 ---
 ## Bill Of Materials (BOM)
-| Componentă                  | Procurare                                                                                                                                                                   | Datasheet                                               |
+| Component                   | Source                                                                                                                                                                      | Datasheet                                               |
 |-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
 | Button                      | [Mouser](https://ro.mouser.com/ProductDetail/CK/KMR221GULCLFS?qs=u2NJ%252B70r0goBXaNk7IrU0Q%3D%3D)                                                                          |[Datasheet](https://www.ckswitches.com/media/1479/kmr2.pdf)|
 | Capacitor SUPERCAP          | [Mouser](https://ro.mouser.com/ProductDetail/Seiko-Semiconductors/CPH3225A?qs=3etwrb1wR%252BhUOph6lAO7eg%3D%3D)                                                             | [Datasheet](https://ro.mouser.com/datasheet/2/360/Seiko_Instruments_MicroBattery_E_20230330_2024Jan_-3561061.pdf)|
@@ -47,66 +47,66 @@
 
 ---
 
-# Functionalitatea Hardware
+# Hardware Functionality
 
-**Sursa de Alimentare si Energie:**
-- **USB cu ESD:** Alimentare si date protejate.
-- **Circuit de Incarcare Li-Po - MCP73831:** Incarcare controlata pentru bateria de 1800 mAh.
-- **Baterie Li-Po & LDO Voltage Regulator:** Regleaza tensiunea la 3.3V pentru toate modulele.
+**Power Supply & Energy Management:**
+- **USB with ESD:** Provides power and protects data lines.
+- **Li-Po Charging Circuit - MCP73831:** Controlled charging for the 1800 mAh battery.
+- **Li-Po Battery & LDO Voltage Regulator:** Regulates voltage to 3.3V for all modules.
 
-**Microcontroller & Interfete:**
+**Microcontroller & Interfaces:**
 - **ESP32-C6:**
-    - **SPI:** Conecteaza memoria NOR Flash, cardul SD și afisajul e-paper.
-    - **I2C:** Conecteaza RTC DS3231, senzorul BME688 și module extinse.
-    - **UART:** Pentru debug și comunicatii seriale.
-    - **GPIO:** Pentru butoane si test pads.
+    - **SPI:** Connects NOR Flash memory, SD card, and e-paper display.
+    - **I2C:** Connects RTC DS3231, BME688 sensor, and expansion modules.
+    - **UART:** For debugging and serial communication.
+    - **GPIO:** For buttons and test pads.
 
-**Module de Stocare & Afisare:**
-- **Memorie NOR Flash (SPI):** Stocare rapida pentru firmware si date.
-- **Card SD (SPI):** Extinde capacitatea de stocare.
-- **E-Paper Display:** Actualizari precise si consum redus, controlat prin SPI.
+**Storage & Display Modules:**
+- **NOR Flash Memory (SPI)** Fast storage for firmware and data.
+- **SD Card (SPI)** Expands storage capacity.
+- **E-Paper Display:** Low-power, precise updates, controlled via SPI.
 
-**Module Suplimentare & Senzori:**
-- **RTC DS3231 (I2C):** Ceas de timp real.
-- **Senzor BME688 (I2C):** Masoara temperatura, umiditatea, presiunea si calitatea aerului.
-- **Conector Qwiic/Stemma QT (I2C):** Permite extinderea cu module suplimentare.
-- **Test Pads & Butoane (GPIO):** Faciliteaza diagnosticarea si controlul direct.
+**Additional Modules & Sensors:**
+- **RTC DS3231 (I2C):** Real-time clock.
+- **BME688 Sensor (I2C):** Measures temperature, humidity, pressure, and air quality.
+- **Qwiic/Stemma QT Connector (I2C):** Allows expansion with additional modules.
+- **Test Pads & Buttons (GPIO):** Facilitate direct control and diagnostics.
 
-**Optimizare Energetica:**
-- **Mod Low-Power al ESP32-C6:** Reduce consumul prin gestionarea dinamica a frecventei si ciclurilor de activitate.
-- **Stabilitate prin LDO:** Asigura o tensiune constanta de 3.3V.
-- **Componente SMD (ex: capsula 0402):** Minimizeaza consumul prin dimensiuni reduse si eficienta sporita.
+**Power Optimization:**
+- **ESP32-C6 Low-Power Mode:** Reduces consumption through dynamic frequency and activity management.
+- **Stable LDO:** Ensures a constant 3.3V voltage.
+- **SMD Components (e.g., 0402 capacitors):** Minimize consumption through small size and improved efficiency.
 
 ---
 
 # ESP32-C6 Pin Mapping
 
-| Nume | GPIO        | Utilizare                                      | Observații                                                                                                                      |
+| Nume | GPIO        | Usage                                          | Notes                                                                                                                           |
 |------|-------------|------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
-| 3V3  | 3V3         | Alimentare 3.3V                                | Sursa de tensiune pentru ESP32-C6 și componente logice.                                                                         |
-| SCK (SPI) | IO6         | Clock pentru SPI                               | Asigură semnalul de ceas pentru transferuri rapide.                                                                             |
-| MOSI (SPI) | IO7         | Transmitere date SPI                           | Trimite date către NOR Flash, SD Card și E-Paper.                                                                               |
-| MISO (SPI) | IO2         | Recepție date SPI                              | Primește date de la dispozitivele SPI.                                                                                          |
-| FLASH_CS | IO11        | Selectare SPI pentru NOR Flash                 | Selectează memoria NOR Flash pe magistrala SPI.                                                                                 |
-| EPD_CS | IO10        | Selectare SPI pentru E-Paper                   | Selectează afișajul e-paper.                                                                                                    |
-| SDA (I2C) | IO21        | Linie de date I2C                              | Conectează RTC DS3231, senzorul BME688 și conectorul Qwiic/Stemma QT.                                                           |
-| SCL (I2C) | IO22        | Linie de ceas I2C                              | Sincronizează comunicația I2C.                                                                                                  |
-| TX (UART) | TXD0/GPIO16 | Transmitere date UART                          | Utilizat pentru debug și comunicații seriale.                                                                                   |
-| RX (UART) | RXD0/GPIO17 | Recepție date UART                             | Utilizat pentru debug și comunicații seriale.                                                                                   |
-| Buton Reset | EN          | Resetare ESP32-C6                              | Pin dedicat pentru resetul sistemului.                                                                                          |
-| Buton Boot | IO9         | Intrare în bootloader                          | Pin dedicat pentru a intra în modul boot.                                                                                       |
-| Buton Change | IO15        | Schimbare mod operare                          | Permite comutarea între modurile de funcționare.                                                                                |
-| EPD DC | IO5         | Data/Command pentru E-Paper                    | Disting între semnal de comandă și semnal de date pentru afișaj.                                                                |
-| EPD RST | IO23        | Resetare E-Paper                               | Resetează afișajul e-paper când este necesar.                                                                                   |
-| EPD BUSY | IO3         | Indicator stare E-Paper                        | Semnal care indică dacă afișajul este ocupat.                                                                                   |
-| INT_RTC | IO0         | Semnal de întrerupere de la RTC (DS3231)        | Activează microcontrolerul.                                                                                                     |
-| 32KHZ | IO1         | Semnal de ceas 32 kHz                 | Linie de oscilație pentru DS3231 sau alt modul (nu intră direct în ESP).                                                        |
-| SS_SD| IO4         | Chip Select pentru card SD (SPI)                | Selectează cardul SD pe magistrala SPI.                                                                                         |
-| USB_D- | IO12        | Linie diferențială USB (minus)                  | Conexiune la portul USB.                                                                                                        |
-| USB_D+ | IO13        | Linie diferențială USB (plus)                   | Conexiune la portul USB.                                                                                                        |
-| RTC_RST | IO18        | Reset extern/semnal RTC                         | Folosit pentru a reseta ceasul de timp real                                                                                     |
-| I2C_PW | IO19        | Linia de alimentare / enable pentru I2C         | Activează/dezactivează alimentarea senzorilor I2C pentru economisirea energiei.                                                 |
-| EPD_3V3_C | IO20        | Linie de alimentare 3.3V pentru E-Paper         | Această linie furnizează 3.3V specifice afișajului e-paper, separate de alimentarea principală, pentru stabilitatea semnalelor. |
+| 3V3  | 3V3         | 3.3V Power Supply                               | Voltage source for ESP32-C6 and logic components.                                                                       |
+| SCK (SPI) | IO6         | SPI Clock                               | Provides the clock signal for high-speed data transfers.                                                                           |
+| MOSI (SPI) | IO7         | SPI Data Transmission                           | Sends data to NOR Flash, SD Card, and E-Paper.                                                                               |
+| MISO (SPI) | IO2         | SPI Data Reception                            | Receives data from SPI devices.                                                                                          |
+| FLASH_CS | IO11        | SPI Chip Select for NOR Flash                | Selects the NOR Flash memory on the SPI bus.                                                                                 |
+| EPD_CS | IO10        | SPI Chip Select for E-Paper                   | Selects the e-paper display.                                                                                                    |
+| SDA (I2C) | IO21        | I2C Data Line                              | Connects RTC DS3231, BME688 sensor, and Qwiic/Stemma QT connector.                                                           |
+| SCL (I2C) | IO22        | I2C Clock Line                              | Synchronizes I2C communication.                                                                                                 |
+| TX (UART) | TXD0/GPIO16 | UART Data Transmission                          | Used for debugging and serial communication.                                                                                   |
+| RX (UART) | RXD0/GPIO17 | UART Data Reception                             | Used for debugging and serial communication.                                                                                   |
+| Buton Reset | EN          | ESP32-C6 Reset                              | Pin dedicat pentru resetul sistemului.                                                                                          |
+| Buton Boot | IO9         | Bootloader Entry                          | Dedicated pin to enter boot mode.                                                                                       |
+| Buton Change | IO15        | Operation Mode Switch                          | Allows switching between different operating modes.                                                                               |
+| EPD DC | IO5         | Data/Command for E-Paper                   | Distinguishes between command and data signals for the display.                                                                |
+| EPD RST | IO23        | E-Paper Reset                               | Resets the e-paper display when needed.                                                                                   |
+| EPD BUSY | IO3         | E-Paper Busy Indicator                        | Signal indicating if the display is currently busy.                                                                                   |
+| INT_RTC | IO0         | RTC Interrupt Signal (DS3231)        | Triggers the microcontroller.                                                                                                     |
+| 32KHZ | IO1         | 32 kHz Clock Signal                | Oscillation line for DS3231 or other modules (not directly connected to ESP).                                                        |
+| SS_SD| IO4         | SPI Chip Select for SD Card               | Selects the SD card on the SPI bus.                                                                                        |
+| USB_D- | IO12        | USB Differential Line (minus)                  | Connection to the USB port.                                                                                                        |
+| USB_D+ | IO13        | USB Differential Line (plus)                   | Connection to the USB port.                                                                                                        |
+| RTC_RST | IO18        | External RTC Reset/Signal                         | Used to reset the real-time clock.                                                                                    |
+| I2C_PW | IO19        | I2C Power/Enable Line         | Turns I2C sensors on/off to save energy.                                                |
+| EPD_3V3_C | IO20        | 3.3V Power Line for E-Paper         | Provides 3.3V specifically for the e-paper display, separate from main power, to ensure signal stability. |
 
 ---
 ## Motivatie
@@ -145,4 +145,5 @@
 ## Concluzie
  Am rezolvat issue-urile semnalate, ajustand grosimea placutei PCB si adaugand modele 3D pentru solder jumper si test pads.
  Pentru test pads am implementat un model propriu.
+
 
