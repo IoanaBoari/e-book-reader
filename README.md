@@ -109,41 +109,41 @@
 | EPD_3V3_C | IO20        | 3.3V Power Line for E-Paper         | Provides 3.3V specifically for the e-paper display, separate from main power, to ensure signal stability. |
 
 ---
-## Motivatie
+## Motivation
 
-- **SPI** (SCK, MOSI, MISO, CS-uri) ofera transfer rapid pentru memorie externa (Flash), card SD si afisaj e-paper.
-- **I2C** (SDA, SCL) conecteaza senzori (RTC, BME688) si conectorul Qwiic, permitand partajarea aceleiasi magistrale la un consum redus.
-- **UART** (TX, RX) e folosit pentru debug.
-- **GPIO suplimentare** (butoane, test pads) faciliteaza controlul manual si diagnosticarea.
-
----
-
-## Pasii de Implementare
-
-- **Schematic:** Am realizat schematicul conform cerintelor proiectului.
-- **Redesenarea PCB-ului:** Am redesenat placa PCB și am pozitionat componentele pe board conform modelului de referinta.
-- **Autorutare:** Am efectuat autorutarea pe top si bottom, folosind o grosime de 0.15mm pentru traseele de semnal.
-- **Net Class pentru Putere:** Am grupat traseele de putere intr-un netclass, le-am colorat si le-am ajustat manual la 0.3mm pentru a asigura o alimentare robusta.
-- **Planuri de Masă si Via Stitching:** Am creat planurile de masă pe top si bottom si am aplicat via stitching lângă modulul ESP pentru o interconectare optima intre straturi.
-- **Modele 3D:** Am descarcat modelele 3D ale componentelor de pe [ComponentSearchEngine](https://componentsearchengine.com/), le-am importat în Fusion 360 si le-am pozitionat pe PCB.
-- **Integrarea in Carcasa:** Am inserat placa in carcasa si am modificat carcasa astfel incat sa se potriveasca butoanele si mufele.
-- **Modelele 3D pentru Baterie si Display:** Am creat modelele 3D pentru baterie si display, conectand firele la test pad-urile corespunzatoare si asigurand o pozitionare corecta in carcasa.
-- **Export:** In final, am generat fisierele Gerber, Pick and Place (CPL) si BOM, pregatindu-le pentru upload si productie.
+- **SPI** (SCK, MOSI, MISO, CS lines) provides fast transfer for external memory (Flash), SD card, and e-paper display.
+- **I2C** (SDA, SCL) connects sensors (RTC, BME688) and the Qwiic connector, allowing bus sharing with low power consumption.
+- **UART** (TX, RX) is used for debugging.
+- **Additional GPIOs** (buttons, test pads) facilitate manual control and diagnostics.
 
 ---
 
-## Probleme Intampinate si Decizii de Acceptare a Erorilor
+## Implementation Steps
 
-- **Model 3D pentru Buton:**  
-  Nu am gasit un model 3D pentru butonul utilizat care sa se potriveasca perfect cu cerintele proiectului, asa ca am modificat modelul gasit pentru a-l adapta la designul nostru.
-
-- **Erori SMD-Hole Board Outline Clearance la Mufa USB:**  
-  Am intampinat doua erori de tip SMD-Hole Board Outline Clearance la mufa USB. Aceste erori au fost acceptate conform indicatiilor primite.
+- **Schematic:** Created the schematic according to the project requirements.
+- **PCB Redesign:** Redesigned the PCB and placed components on the board based on the reference model.
+- **Autorouting:** Performed autorouting on both top and bottom layers, using a 0.15 mm trace width for signal lines.
+- **Power Net Class:** Grouped power traces into a net class, highlighted them, and manually adjusted to 0.3 mm to ensure robust power delivery.
+- **Ground Planes and Via Stitching:** Added ground planes on top and bottom layers and applied via stitching near the ESP module for optimal inter-layer connectivity.
+- **3D Models:** Downloaded component 3D models from [ComponentSearchEngine](https://componentsearchengine.com/), imported them into Fusion 360, and placed them on the PCB.
+- **Enclosure Integration:** Inserted the PCB into the enclosure and modified it to properly fit the buttons and connectors.
+- **3D Models for Battery and Display:** Created 3D models for the battery and display, connecting wires to the corresponding test pads and ensuring correct placement inside the enclosure.
+- **Export:** Finally, generated Gerber files, Pick and Place (CPL), and BOM, preparing them for upload and production.
 
 ---
 
-## Concluzie
- Am rezolvat issue-urile semnalate, ajustand grosimea placutei PCB si adaugand modele 3D pentru solder jumper si test pads.
- Pentru test pads am implementat un model propriu.
+## Issues Encountered and Error Acceptance Decisions
+
+- **3D Model for Button:**  
+  Could not find a 3D model for the button that perfectly matched the project requirements, so I modified an existing model to fit the design.
+
+- **SMD-Hole Board Outline Clearance Errors at USB Connector:**  
+  Encountered two SMD-Hole Board Outline Clearance errors at the USB connector. These errors were accepted according to the provided guidelines.
+---
+
+## Conclusion
+ I resolved the reported issues by adjusting the PCB thickness and adding 3D models for the solder jumper and test pads.
+ For the test pads, I implemented a custom model.
+
 
 
